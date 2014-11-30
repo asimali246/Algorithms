@@ -1,0 +1,15 @@
+#!usr/bin/java
+import java.math.*;
+public class Kadane
+{
+public static void main(String args[])
+{
+int a[]={3,-5,5,2,-3,9,-6,2};
+int max=0,end=0;
+for(int i=0;i<a.length;i++)
+{
+end=Math.max(a[i],end+a[i]);
+max=Math.max(max,end);
+}
+System.out.println(max);
+}

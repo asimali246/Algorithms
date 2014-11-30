@@ -1,0 +1,83 @@
+#!usr/bin/perl
+use warnings;
+use utf8;
+use 5.010;
+use 5.012;
+use 5.014;
+use strict;
+use autodie;
+my %hash;
+my @arr;
+my $size=0;
+my $total=0;
+sub permute
+{
+    my $tmp=0;
+    my @arr2;
+    my @visit;
+    my $count=0;
+    my $count2=0;
+    $count=pop @_;
+while($tmp<=$count)
+{
+    $arr2[$tmp++]=shift @_;
+}
+$tmp=0;
+while($tmp<$size)
+{
+    $visit[$tmp++]=shift @_;
+}
+if($count<$size-1)
+{
+    foreach my $tmp2 (@arr)
+{
+if($visit[$count2++]==0)
+{
+    $visit[$count2-1]=1;
+    $arr2[++$count]=$tmp2;
+    &permute(@arr2,@visit,$count);
+    $visit[$count2-1]=0;
+    $count--;
+}
+}
+}
+else
+{
+    my $ans="";
+    foreach (@arr2)
+{
+    $ans="$ans"."$_";
+}
+unless(exists $hash{$ans})
+{
+    $hash{$ans}=1;
+    $total++;
+}
+}
+}
+{
+$size=0;
+say "Enter the string";
+chomp(my $s=<STDIN>);
+while($s ne "")
+{
+if($s=~m#.#)
+{
+    $arr[$size++]=$&;
+    $s=${^POSTMATCH};
+}
+}
+my @visit;
+my $tmp=0;
+while($tmp<$size)
+{
+    $visit[$tmp++]=0;
+}
+my $count=-1;
+&permute(my @arr2, @visit,$count);
+foreach my $ans (keys %hash)
+{
+    say "$ans";
+}
+say "$total";
+}

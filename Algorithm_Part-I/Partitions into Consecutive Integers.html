@@ -1,0 +1,76 @@
+
+<!-- saved from url=(0069)file:///media/KINGSTON/Partitions%20into%20Consecutive%20Integers.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Partitions into Consecutive Integers</title>
+<style type="text/css"></style><style type="text/css">.dpmaxz_hidden {visibility: hidden;}#dpmaxz_root {-webkit-user-select: none; display: inline-block; z-index: 2147483647;margin: 0;padding: 0;}#dpmaxz_gui {-webkit-user-select: none; position: static; margin: 0;padding: 0;cursor: default;}#dpmaxz_root .dpmaxz_mainbkg {display: block;position: absolute;cursor: default;margin: -25px 0 0 -32px;width: 50px;height: 24px;background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_fbishield {float: left;margin: -10px 0 0 3px;padding: 0;width: 29px;height: 37px;background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainimg.png) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_fbiauthok {background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainimg_ok.png) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_fbiauthno {background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainimg_no.png) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_fbixchg {background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainxchg.png) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_menuact {background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainmact.png) no-repeat;}#dpmaxz_root .dpmaxz_mainbkg .dpmaxz_fbiadd {height: 16px;width: 15px;float: right;background: transparent url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/mainadd.png) no-repeat;margin: 0 -16px 0 0;}#dpmaxz_gui .dpmaxz_menus {position: absolute; z-index: 2147483647; }.dpmaxz_menusrel {position: relative; }#dpmaxz_gui .dpmaxz_menus ul {position: absolute; left: 0;top: 22px; list-style: none;white-space: nowrap;border: 1px solid #a0a0a0;background-image: -webkit-linear-gradient(top, rgb(240,245,255) 73%, white 100%);box-shadow: 4px 4px 4px -3px #605F70;font-family: 'Segoe UI',Verdana,Arial;font-style: normal;font-size: 1em;padding: 3px 3px;margin: 2px 4px 2px 4px;}#dpmaxz_gui .dpmaxz_menus ul li {text-decoration: none;text-align: left;margin: 0; padding: 0;}#dpmaxz_gui .dpmaxz_menus ul li:hover {border: 1px solid #aecff7;-webkit-border-radius: 4px;background-color: #edf1f6;margin: -1px;}#dpmaxz_gui .dpmaxz_menus .dpmaxz_menurow {position: relative;color: black;height: 22px;float: none; }#dpmaxz_gui .dpmaxz_menus .dpmaxz_menurow span {display: inline-block !important;  }#dpmaxz_gui .dpmaxz_menus .dpmaxz_menurowicon {display: inline-block;width: 26px;height: 22px;position: relative;vertical-align: top;border-right: 1px solid #e2e3e3;font-size: 12px; color: black; }#dpmaxz_gui .dpmaxz_menus .dpmaxz_menurowtext {display: inline-block;border-left: 1px solid #ffffff;padding: 0 4px;font: normal 1em 'Segoe UI',Verdana,Arial; font-size: 12px;height: 22px;vertical-align: middle;}.dpmaxz_highlight {-webkit-border-image: url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/highlighter.png) 5 9 8 6 repeat;border-image: url(chrome-extension://ncffjdbbodifgldkcbhmiiljfcnbgjab/images/highlighter.png) 5 9 8 6 repeat;}</style></head>
+<body bgcolor="#ffffff">
+<h2>Partitions into Consecutive Integers</h2>
+<pre>For any positive integer N, let f(N) denote the number of ways in
+which n can be expressed as the sum of consecutive positive integers.
+For example, since 9 can be expressed as 2+3+4 and as 4+5 and as 9,
+we have f(9)=3.
+
+The sum of the integers from 1 to n is n(n+1)/2, so we're looking 
+for the number of ways in which a given integer N can be expressed 
+in the form 
+                  N = n(n+1)/2 - m(m+1)/2                   (1)
+
+for a positive integer n and non-negative integer m.  Solving this 
+for m gives
+                        ____________________
+                  -1 + / 1 - 4[2N - n(n+1)]
+          m   =   ---------------------------
+                                2
+
+which implies that the quantity inside the square root must be a 
+square integer.  Thus there is an integer u such that
+
+           4n^2 + 4n + 1 - 8N - u^2  =  0
+
+Clearly u must be odd.  Solving this for n gives
+                             _________
+                       -1 + / 8N + u^2
+                n  =   ----------------
+                                2
+
+Again, this requires that the quantity inside the square root is a 
+square integer, so we have an integer v such that
+
+            8N  =  v^2 - u^2  =  (v-u)(v+u)
+
+and since u is odd, v must also be odd.  Thus we can write this in 
+the form
+               2N  =  [(v-u)/2] [(v+u)/2]
+
+So we are looking for ways of factoring 2N into two factors, A=(v-u)/2 
+and B=(v+u)/2 with odd integers u,v.  We have v=A+B and u=B-A, so A 
+and B must have opposite parity, i.e., one is odd and one is even.  
+Thus, the integers A,B give a solution if and only if 2N = AB and one 
+of A,B is odd and the other is even.  Clearly this occurs for any odd 
+divisor d of N, which let's us take A=d and B=2N/d (or vice versa, 
+which ever give B &gt; A).  Consequently, the number of ways of expressing 
+N as a sum of consecutive positive integers is equal to the number of 
+odd divisors of N.
+
+For example, there are three odd divisors of N=9, namely 1, 3, and 9, 
+so we have f(9) = 3, corresponding to the three solutions
+
+          A   B     v   u     n   m       expression
+         --- ---   --- ---   --- ---     -------------
+          1   18    19  17     9  8        9
+          3    6     9   3     4  1        2+3+4
+          2    9    11   7     5  3        4+5
+      
+Incidentally, if we let F(N) denote the number of ways of expressing 
+N  as the sum of consecutive integers, without requiring that they be
+positive integers, then clearly F(N) = 2f(N), because for any sum of
+consecutive integers extending from -m to n the total is again given
+by equation (1), and for each solution that ranges from m+1 to n
+there corresponds an equivalent solution ranging from -m to n.
+</pre>
+<hr>
+<a href="http://www.mathpages.com/home/index.htm">Return to MathPages Main Menu</a>
+<hr>
+
+
+</body></html>

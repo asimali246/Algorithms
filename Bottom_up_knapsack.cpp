@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cmath>
+#include<cstring>
+#include<cstdio>
+#include<iomanip>
+#include<algorithm>
+#include<stack>
+#include<vector>
+#include<fstream>
+#include<map>
+using namespace std;
+typedef vector<int> vi;
+int main()
+{
+    int t, c;
+    bool x=false;
+    int p[10000], w[10000];
+    while(scanf("%d %d", &t, &c)!=EOF)
+    {
+        int n;
+        scanf("%d", &n);
+        for(int i=1;i<=n;++i)
+        {
+            scanf("%d %d", &w[i], &p[i]);
+            w[i]=3*c*w[i];
+        }
+        int dp[1000][1000];
+        memset(dp, 0, sizeof dp);
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=t;j++)
+            {
+                if(w[i]>j)
+                    dp[i][j]=dp[i-1][j];
+                else
+                    dp[i][j]=max(dp[i-1][j], dp[i-1][j-w[i]]+p[i]);
+            }
+        }
+        if(x==true)printf("\n");
+        x=true;
+        printf("%d\n", dp[n][t]);
+        int k=0;
+        int index[n];
+        int x=n, y=t;
+        while(x>0 && y>=0)
+        {
+            if(dp[x][y]!=dp[x-1][y])
+            {
+                index[k++]=x;
+                y-=w[x];
+                --x;
+            }
+            else
+                --x;
+        }
+        printf("%d\n", k);
+        for(int i=k-1;i>=0;--i)
+            printf("%d %d\n", w[index[i]]/(3*c), p[index[i]]);
+    }
+    return 0;
+}

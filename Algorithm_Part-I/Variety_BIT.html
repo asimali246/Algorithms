@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/ -->
+<html lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="https://widgets.getpocket.com/v1/j/btn.js?v=1&_=1405622848716"></script><script async="" src="http://platform.linkedin.com/in.js?async=true&_=1405622848715"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Range updates with BIT / Fenwick Tree | Everything Under The Sun</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://kartikkukreja.wordpress.com/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://s0.wp.com/wp-content/themes/pub/sundance/js/html5.js?m=1328825868g" type="text/javascript"></script>
+<![endif]-->
+<meta name="google-site-verification" content="fRzmqH-5BqdlAgmAgWt7CR3C0y1w092pLqBYFvrTR-Y">
+<meta name="msvalidate.01" content="17FF437CE849C1C7AF63B9C0967E60A7">
+<link rel="alternate" type="application/rss+xml" title="Everything Under The Sun » Feed" href="http://kartikkukreja.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Everything Under The Sun » Comments Feed" href="http://kartikkukreja.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Everything Under The Sun » Range updates with BIT / Fenwick Tree Comments Feed" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/feed/">
+<script src="./Variety_BIT_files/cb=gapi.loaded_1" async=""></script><script src="./Variety_BIT_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="http://assets.pinterest.com/js/pinit.js"></script><script type="text/javascript" async="" src="./Variety_BIT_files/plusone.js" gapi_processed="true"></script><script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" id="all-css-0" href="./Variety_BIT_files/saved_resource" type="text/css" media="all">
+<link rel="stylesheet" id="sundance-droid-serif-css" href="./Variety_BIT_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="all-css-2" href="./Variety_BIT_files/saved_resource(1)" type="text/css" media="all">
+<link rel="stylesheet" id="print-css-2" href="./Variety_BIT_files/global-print.css" type="text/css" media="print">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script><style type="text/css"></style>
+<script type="text/javascript" src="./Variety_BIT_files/saved_resource(2)"></script>
+<link rel="stylesheet" id="all-css-0" href="./Variety_BIT_files/style.css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='http://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563g&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://kartikkukreja.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://kartikkukreja.wordpress.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Scheduling to minimize lateness" href="http://kartikkukreja.wordpress.com/2013/11/24/scheduling-to-minimize-lateness/">
+<link rel="next" title="Divisibility rules" href="http://kartikkukreja.wordpress.com/2013/12/22/divisibility-rules/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="./Variety_BIT_files/Variety_BIT.html">
+<link rel="shortlink" href="http://wp.me/p3be6S-6M">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&url=http%3A%2F%2Fkartikkukreja.wordpress.com%2F2013%2F12%2F02%2Frange-updates-with-bit-fenwick-tree%2F&for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&url=http%3A%2F%2Fkartikkukreja.wordpress.com%2F2013%2F12%2F02%2Frange-updates-with-bit-fenwick-tree%2F&for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Range updates with BIT / Fenwick Tree">
+<meta property="og:url" content="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/">
+<meta property="og:description" content="I described implementation of BIT/Fenwick tree in an earlier post as a way of maintaining cumulative frequency table, which allows operations like updating any single element and querying sum of el...">
+<meta property="article:published_time" content="2013-12-02T16:30:00+00:00">
+<meta property="article:modified_time" content="2014-07-15T06:41:55+00:00">
+<meta property="article:author" content="https://www.facebook.com/profile.php?id=100000509885451">
+<meta property="og:site_name" content="Everything Under The Sun">
+<meta property="og:image" content="http://1.gravatar.com/blavatar/7110b9055e054b9f9363cc3d30023747?s=200">
+<meta name="twitter:site" content="@kartikkukreja92">
+<meta name="twitter:image" content="http://1.gravatar.com/blavatar/7110b9055e054b9f9363cc3d30023747?s=240">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@kartikkukreja92">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="http://1.gravatar.com/blavatar/17017a8db6ec60cce5bdc71278ecdc28?s=16" sizes="16x16">
+<link rel="icon" type="image/x-icon" href="http://1.gravatar.com/blavatar/17017a8db6ec60cce5bdc71278ecdc28?s=16" sizes="16x16">
+<link rel="apple-touch-icon-precomposed" href="http://1.gravatar.com/blavatar/7110b9055e054b9f9363cc3d30023747?s=114">
+<link rel="openid.server" href="http://kartikkukreja.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="http://kartikkukreja.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="http://kartikkukreja.wordpress.com/osd.xml" title="Everything Under The Sun">
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com">
+<link rel="author" href="https://plus.google.com/104022914902346204287" title="Kartik kukreja on Google+"> 
+
+<meta name="geo.position" content="28.635308;77.224960">
+<meta name="ICBM" content="28.635308, 77.224960">
+<meta name="application-name" content="Everything Under The Sun"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="A blog on CS concepts"><meta name="msapplication-task" content="name=Subscribe;action-uri=http://kartikkukreja.wordpress.com/feed/;icon-uri=http://1.gravatar.com/blavatar/17017a8db6ec60cce5bdc71278ecdc28?s=16"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="title" content="Range updates with BIT / Fenwick Tree | Everything Under The Sun on WordPress.com">
+<meta name="description" content="I described implementation of BIT/Fenwick tree in an earlier post as a way of maintaining cumulative frequency table, which allows operations like updating any single element and querying sum of elements in a range [a...b] in logarithmic time. I recently found out that this is only one of the ways of using a BIT. A…">
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-image: url('http://kartikkukreja.wordpress.com/wp-content/themes/pub/sundance/images/bg.jpg?m=1341022268g'); background-repeat: repeat; background-position: top left; background-attachment: fixed; }
+</style>
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+<style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Variety_BIT_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Variety_BIT_files/services.css"><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><script type="text/javascript" src="./Variety_BIT_files/sf_preloader.jsp"></script><script type="text/javascript" src="./Variety_BIT_files/sf_code.jsp"></script><script type="text/javascript" src="./Variety_BIT_files/base_single_icon.js"></script><link rel="stylesheet" href="http://www.superfish.com/ws/css/main.css?v=14.7.17.02"><script type="text/javascript" src="./Variety_BIT_files/get.jsp"></script><script src="./Variety_BIT_files/ngram_id_dict.json" id="SF_ngram_call" type="text/javascript"></script></head>
+
+<body class="single single-post postid-420 single-format-standard custom-background mp6 highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<div class="masthead-inner clear-fix">
+			<hgroup>
+				<h1 class="site-title"><a href="http://kartikkukreja.wordpress.com/" title="Everything Under The Sun" rel="home">Everything Under The Sun</a></h1>
+				<h2 class="site-description">A blog on CS concepts</h2>
+			</hgroup>
+
+							<a href="http://kartikkukreja.wordpress.com/" title="Everything Under The Sun" rel="home" class="clear header-image-link">
+					<img src="./Variety_BIT_files/cropped-matrix_wallpaper_2.jpg" width="984" height="242" alt="">
+				</a>
+			
+			<nav role="navigation" class="site-navigation main-navigation">
+				<h1 class="assistive-text">Menu</h1>
+				<div class="assistive-text skip-link"><a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#content" title="Skip to content">Skip to content</a></div>
+
+				<div class="menu"><ul><li><a href="http://kartikkukreja.wordpress.com/">Home</a></li><li class="page_item page-item-1"><a href="http://kartikkukreja.wordpress.com/about/">About</a></li></ul></div>
+			</nav>
+		</div>
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="clear-fix">
+		
+		<div id="primary" class="site-content">
+			<div id="content" role="main">
+
+			
+				
+<article id="post-420" class="post-420 post type-post status-publish format-standard hentry category-data-structures tag-binary-indexed-tree tag-bit tag-c-implementation tag-explanation tag-fenwick-tree tag-horrible-spoj tag-point-updatesrange-queries tag-range-updatespoint-queries tag-range-updatesrange-queries tag-updateit-spoj">
+
+	<header class="entry-header">
+		<a href="http://kartikkukreja.wordpress.com/author/kartikkukreja/">
+			<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-0">		</a>
+
+		<h1 class="entry-title">Range updates with BIT / Fenwick&nbsp;Tree</h1>
+
+		<div class="entry-meta">
+			<a href="./Variety_BIT_files/Variety_BIT.html" title="10:00 pm" rel="bookmark"><time class="entry-date" datetime="2013-12-02T22:00:00+00:00" pubdate="">December 2, 2013</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="http://kartikkukreja.wordpress.com/author/kartikkukreja/" title="View all posts by Kartik kukreja" rel="author">Kartik kukreja</a></span></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<div style="font-family:Open Sans, Helvetica Neue, sans-serif;font-size:13px;">
+<p>I described implementation of BIT/Fenwick tree in an <a title="BIT/Fenwick tree C++ implementation" href="http://kartikkukreja.wordpress.com/2013/05/11/bit-fenwick-tree-data-structure-c-implementation/" target="_blank">earlier post</a> as a way of maintaining cumulative frequency table, which allows operations like updating any single element and querying sum of elements in a range [a...b] in logarithmic time. I recently found out that this is only one of the ways of using a BIT. A BIT can in fact be operated in one of three modes:</p>
+<p><span id="more-420"></span></p>
+<p><strong>1. Point Updates and Range Queries</strong></p>
+<p>Given an array A of N numbers, we need to support adding a value v to any element A[p] and querying the sum of numbers A[a] + A[a+1] + … + A[b], both operations in O(log N). Let ft[N+1] denotes the underlying fenwick tree.<br>
+<script src="./Variety_BIT_files/6e5677a112f3d4111ea9.js"></script><link rel="stylesheet" href="https://gist-assets.github.com/assets/embed-e8861c84ff85edae1cf9869dd551c98d.css"></p><div id="gist13246721" class="gist">
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+            
+
+
+
+    <div class="file-data">
+      <table cellpadding="0" cellspacing="0" class="lines highlight">
+        <tbody><tr>
+          <td class="line-numbers">
+            <span class="line-number" id="file-point-updates-and-range-queries-L1" rel="file-point-updates-and-range-queries-L1">1</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L2" rel="file-point-updates-and-range-queries-L2">2</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L3" rel="file-point-updates-and-range-queries-L3">3</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L4" rel="file-point-updates-and-range-queries-L4">4</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L5" rel="file-point-updates-and-range-queries-L5">5</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L6" rel="file-point-updates-and-range-queries-L6">6</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L7" rel="file-point-updates-and-range-queries-L7">7</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L8" rel="file-point-updates-and-range-queries-L8">8</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L9" rel="file-point-updates-and-range-queries-L9">9</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L10" rel="file-point-updates-and-range-queries-L10">10</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L11" rel="file-point-updates-and-range-queries-L11">11</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L12" rel="file-point-updates-and-range-queries-L12">12</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L13" rel="file-point-updates-and-range-queries-L13">13</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L14" rel="file-point-updates-and-range-queries-L14">14</span>
+            <span class="line-number" id="file-point-updates-and-range-queries-L15" rel="file-point-updates-and-range-queries-L15">15</span>
+          </td>
+          <td class="line-data">
+            <pre class="line-pre"><div class="line" id="file-point-updates-and-range-queries-LC1"># Add v to A[p]</div><div class="line" id="file-point-updates-and-range-queries-LC2">update(p, v):</div><div class="line" id="file-point-updates-and-range-queries-LC3">    for (; p &lt;= N; p += p&amp;(-p))</div><div class="line" id="file-point-updates-and-range-queries-LC4">        ft[p] += v 	 </div><div class="line" id="file-point-updates-and-range-queries-LC5">&nbsp;</div><div class="line" id="file-point-updates-and-range-queries-LC6"># Return sum A[1...b]	 </div><div class="line" id="file-point-updates-and-range-queries-LC7">query(b): 	</div><div class="line" id="file-point-updates-and-range-queries-LC8">    sum = 0 	</div><div class="line" id="file-point-updates-and-range-queries-LC9">    for(; b &gt; 0; b -= b&amp;(-b))</div><div class="line" id="file-point-updates-and-range-queries-LC10">        sum += ft[b]</div><div class="line" id="file-point-updates-and-range-queries-LC11">    return sum</div><div class="line" id="file-point-updates-and-range-queries-LC12">&nbsp;</div><div class="line" id="file-point-updates-and-range-queries-LC13"># Return sum A[a...b]</div><div class="line" id="file-point-updates-and-range-queries-LC14">query(a, b):</div><div class="line" id="file-point-updates-and-range-queries-LC15">    return query(b) - query(a-1)</div></pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+          </div>
+          <div class="gist-meta">
+            <a href="https://gist.github.com/kartikkukreja/6e5677a112f3d4111ea9/raw/Point%20Updates%20and%20Range%20Queries" style="float:right">view raw</a>
+            <a href="https://gist.github.com/kartikkukreja/6e5677a112f3d4111ea9#file-point-updates-and-range-queries">Point Updates and Range Queries</a>
+            hosted with ❤ by <a href="https://github.com/">GitHub</a>
+          </div>
+        </div>
+</div>
+<br>
+Take a look at <a title="Point Updates/Range Queries with BIT" href="https://github.com/kartikkukreja/blog-codes/blob/master/src/BIT%20or%20Fenwick%20Tree%20Data%20Structure.cpp" target="_blank">C++ implementation</a>.<p></p>
+<p><strong>2. Range Updates and Point queries</strong></p>
+<p>Given an array A of N numbers, we need to support adding a value v to each element A[a...b] and querying the value of A[p], both operations in O(log N). Let ft[N+1] denote the underlying fenwick tree.<br>
+<script src="./Variety_BIT_files/241ccb8758d625f1904f.js"></script><link rel="stylesheet" href="https://gist-assets.github.com/assets/embed-e8861c84ff85edae1cf9869dd551c98d.css"></p><div id="gist13246773" class="gist">
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+            
+
+
+
+    <div class="file-data">
+      <table cellpadding="0" cellspacing="0" class="lines highlight">
+        <tbody><tr>
+          <td class="line-numbers">
+            <span class="line-number" id="file-range-updates-and-point-queries-L1" rel="file-range-updates-and-point-queries-L1">1</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L2" rel="file-range-updates-and-point-queries-L2">2</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L3" rel="file-range-updates-and-point-queries-L3">3</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L4" rel="file-range-updates-and-point-queries-L4">4</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L5" rel="file-range-updates-and-point-queries-L5">5</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L6" rel="file-range-updates-and-point-queries-L6">6</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L7" rel="file-range-updates-and-point-queries-L7">7</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L8" rel="file-range-updates-and-point-queries-L8">8</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L9" rel="file-range-updates-and-point-queries-L9">9</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L10" rel="file-range-updates-and-point-queries-L10">10</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L11" rel="file-range-updates-and-point-queries-L11">11</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L12" rel="file-range-updates-and-point-queries-L12">12</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L13" rel="file-range-updates-and-point-queries-L13">13</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L14" rel="file-range-updates-and-point-queries-L14">14</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L15" rel="file-range-updates-and-point-queries-L15">15</span>
+            <span class="line-number" id="file-range-updates-and-point-queries-L16" rel="file-range-updates-and-point-queries-L16">16</span>
+          </td>
+          <td class="line-data">
+            <pre class="line-pre"><div class="line" id="file-range-updates-and-point-queries-LC1"># Add v to A[p]</div><div class="line" id="file-range-updates-and-point-queries-LC2">update(p, v):</div><div class="line" id="file-range-updates-and-point-queries-LC3">    for (; p &lt;= N; p += p&amp;(-p))</div><div class="line" id="file-range-updates-and-point-queries-LC4">        ft[p] += v 	 </div><div class="line" id="file-range-updates-and-point-queries-LC5">&nbsp;</div><div class="line" id="file-range-updates-and-point-queries-LC6"># Add v to A[a...b] </div><div class="line" id="file-range-updates-and-point-queries-LC7">update(a, b, v):     </div><div class="line" id="file-range-updates-and-point-queries-LC8">    update(a, v)     </div><div class="line" id="file-range-updates-and-point-queries-LC9">    update(b + 1, -v)  	 </div><div class="line" id="file-range-updates-and-point-queries-LC10">&nbsp;</div><div class="line" id="file-range-updates-and-point-queries-LC11"># Return A[b]	 </div><div class="line" id="file-range-updates-and-point-queries-LC12">query(b):     </div><div class="line" id="file-range-updates-and-point-queries-LC13">    sum = 0     </div><div class="line" id="file-range-updates-and-point-queries-LC14">    for(; b &gt; 0; b -= b&amp;(-b))</div><div class="line" id="file-range-updates-and-point-queries-LC15">        sum += ft[b]</div><div class="line" id="file-range-updates-and-point-queries-LC16">    return sum</div></pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+          </div>
+          <div class="gist-meta">
+            <a href="https://gist.github.com/kartikkukreja/241ccb8758d625f1904f/raw/Range%20Updates%20and%20Point%20Queries" style="float:right">view raw</a>
+            <a href="https://gist.github.com/kartikkukreja/241ccb8758d625f1904f#file-range-updates-and-point-queries">Range Updates and Point Queries</a>
+            hosted with ❤ by <a href="https://github.com/">GitHub</a>
+          </div>
+        </div>
+</div>
+<br>
+<strong>Explanation:</strong> update(p, v) will affect all p’ &gt;= p. To limit the effect to a given range [a...b], we subtract -v from all p’ &gt; b by performing the operation update(b+1, -v).<p></p>
+<p>See problem <a title="UPDATEIT Spoj" href="http://www.spoj.com/problems/UPDATEIT/" target="_blank">UPDATEIT</a> which uses this idea.</p>
+<p>Take a look at <a title="Range Updates/Point Queries with BIT" href="https://github.com/kartikkukreja/blog-codes/blob/master/src/Range%20Updates%20%26%20Point%20Queries%20with%20BIT.cpp" target="_blank">C++ implementation</a>.</p>
+<p><strong>3. Range Updates and Range Queries</strong></p>
+<p>Given an array A of N numbers, we need to support adding a value v to each element A[a...b] and querying the sum of numbers A[a...b], both operations in O(log N). This can be done by using two BITs B1[N+1], B2[N+1].<br>
+<script src="./Variety_BIT_files/431f6414f0f7b2dd84b3.js"></script><link rel="stylesheet" href="https://gist-assets.github.com/assets/embed-e8861c84ff85edae1cf9869dd551c98d.css"></p><div id="gist13246796" class="gist">
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+            
+
+
+
+    <div class="file-data">
+      <table cellpadding="0" cellspacing="0" class="lines highlight">
+        <tbody><tr>
+          <td class="line-numbers">
+            <span class="line-number" id="file-range-updates-and-range-queries-L1" rel="file-range-updates-and-range-queries-L1">1</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L2" rel="file-range-updates-and-range-queries-L2">2</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L3" rel="file-range-updates-and-range-queries-L3">3</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L4" rel="file-range-updates-and-range-queries-L4">4</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L5" rel="file-range-updates-and-range-queries-L5">5</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L6" rel="file-range-updates-and-range-queries-L6">6</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L7" rel="file-range-updates-and-range-queries-L7">7</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L8" rel="file-range-updates-and-range-queries-L8">8</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L9" rel="file-range-updates-and-range-queries-L9">9</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L10" rel="file-range-updates-and-range-queries-L10">10</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L11" rel="file-range-updates-and-range-queries-L11">11</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L12" rel="file-range-updates-and-range-queries-L12">12</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L13" rel="file-range-updates-and-range-queries-L13">13</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L14" rel="file-range-updates-and-range-queries-L14">14</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L15" rel="file-range-updates-and-range-queries-L15">15</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L16" rel="file-range-updates-and-range-queries-L16">16</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L17" rel="file-range-updates-and-range-queries-L17">17</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L18" rel="file-range-updates-and-range-queries-L18">18</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L19" rel="file-range-updates-and-range-queries-L19">19</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L20" rel="file-range-updates-and-range-queries-L20">20</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L21" rel="file-range-updates-and-range-queries-L21">21</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L22" rel="file-range-updates-and-range-queries-L22">22</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L23" rel="file-range-updates-and-range-queries-L23">23</span>
+            <span class="line-number" id="file-range-updates-and-range-queries-L24" rel="file-range-updates-and-range-queries-L24">24</span>
+          </td>
+          <td class="line-data">
+            <pre class="line-pre"><div class="line" id="file-range-updates-and-range-queries-LC1">update(ft, p, v):</div><div class="line" id="file-range-updates-and-range-queries-LC2">    for (; p &lt;= N; p += p&amp;(-p))</div><div class="line" id="file-range-updates-and-range-queries-LC3">        ft[p] += v 	 </div><div class="line" id="file-range-updates-and-range-queries-LC4">&nbsp;</div><div class="line" id="file-range-updates-and-range-queries-LC5"># Add v to A[a...b] </div><div class="line" id="file-range-updates-and-range-queries-LC6">update(a, b, v): 	</div><div class="line" id="file-range-updates-and-range-queries-LC7">    update(B1, a, v) 	</div><div class="line" id="file-range-updates-and-range-queries-LC8">    update(B1, b + 1, -v) 	</div><div class="line" id="file-range-updates-and-range-queries-LC9">    update(B2, a, v * (a-1)) 	</div><div class="line" id="file-range-updates-and-range-queries-LC10">    update(B2, b + 1, -v * j) 	 </div><div class="line" id="file-range-updates-and-range-queries-LC11">&nbsp;</div><div class="line" id="file-range-updates-and-range-queries-LC12">query(ft, b): 	</div><div class="line" id="file-range-updates-and-range-queries-LC13">    sum = 0 	</div><div class="line" id="file-range-updates-and-range-queries-LC14">    for(; b &gt; 0; b -= b&amp;(-b))</div><div class="line" id="file-range-updates-and-range-queries-LC15">        sum += ft[b]</div><div class="line" id="file-range-updates-and-range-queries-LC16">    return sum</div><div class="line" id="file-range-updates-and-range-queries-LC17">&nbsp;</div><div class="line" id="file-range-updates-and-range-queries-LC18"># Return sum A[1...b]</div><div class="line" id="file-range-updates-and-range-queries-LC19">query(b):</div><div class="line" id="file-range-updates-and-range-queries-LC20">    return query(B1, b) * b - query(B2, b)</div><div class="line" id="file-range-updates-and-range-queries-LC21">&nbsp;</div><div class="line" id="file-range-updates-and-range-queries-LC22"># Return sum A[a...b]</div><div class="line" id="file-range-updates-and-range-queries-LC23">query(a, b):</div><div class="line" id="file-range-updates-and-range-queries-LC24">    return query(b) - query(a-1)</div></pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+          </div>
+          <div class="gist-meta">
+            <a href="https://gist.github.com/kartikkukreja/431f6414f0f7b2dd84b3/raw/Range%20Updates%20and%20Range%20Queries" style="float:right">view raw</a>
+            <a href="https://gist.github.com/kartikkukreja/431f6414f0f7b2dd84b3#file-range-updates-and-range-queries">Range Updates and Range Queries</a>
+            hosted with ❤ by <a href="https://github.com/">GitHub</a>
+          </div>
+        </div>
+</div>
+<br>
+<strong>Explanation:</strong><p></p>
+<p>BIT B1 is used like in the earlier case with range updates/point queries such that query(B1, p) gives A[p].</p>
+<p>Consider a range update query: Add v to [a...b]. Let all elements initially be 0. Now, Sum(0…p) for different p is as follows:</p>
+<ul>
+<li>0 &lt; p &lt; a : 0</li>
+<li>a &lt;= p &lt;= b : v * (p – (a – 1))</li>
+<li>b &lt; p &lt;= N : v * (b – (a – 1))</li>
+</ul>
+<p>Thus, for a given index p, if we have v * p, we can find Sum(0…p) by subtracting a value X from it such that</p>
+<ul>
+<li>0 &lt; p &lt; a : Sum(0..p) = 0, X = 0</li>
+<li>a &lt;= p &lt;= b : Sum(0…p) = (v * p) – (v * (a-1)), X = v * (a-1)</li>
+<li>b &lt; p &lt;= N: Sum(0…p) = (v * b) – (v * (a-1)), X = -(v * b) + (v * (a-1))</li>
+</ul>
+<p>To maintain this extra factor X, we use another BIT B2 such that</p>
+<ul>
+<li>Add v to [a...b] -&gt; Update(B2, a, v * (a-1)) and Update(B2, b+1, -v * b)</li>
+<li>Query(B2, p) gives the value X that must be subtracted from A[p] * p</li>
+</ul>
+<p><span style="line-height:1.5;">See problem </span><a style="line-height:1.5;" title="HORRIBLE Spoj" href="http://www.spoj.com/problems/HORRIBLE/" target="_blank">HORRIBLE</a><span style="line-height:1.5;"> which uses this idea.</span></p>
+<p>Take a look at <a title="Range Updates/Range Queries with BIT" href="https://github.com/kartikkukreja/blog-codes/blob/master/src/Range%20Updates%20%26%20Range%20Queries%20with%20BIT.cpp" target="_blank">C++ implementation</a>.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><a title="Topcoder forum" href="http://apps.topcoder.com/forums/?module=Thread&threadID=715842&start=0&mc=8" target="_blank">http://apps.topcoder.com/forums/?module=Thread&amp;threadID=715842&amp;start=0&amp;mc=8</a></li>
+<li><a title="Quora post" href="http://programmingcontests.quora.com/Tutorial-Range-Updates-in-Fenwick-Tree" target="_blank">http://programmingcontests.quora.com/Tutorial-Range-Updates-in-Fenwick-Tree</a></li>
+</ul>
+</div>
+		<div id="geo-post-420" class="geo geo-post" style="display: none">
+			<span class="latitude">28.635308</span>
+			<span class="longitude">77.224960</span>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><div class="like_button"><iframe src="./Variety_BIT_files/saved_resource.html" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 96px; height: 21px; display: none !important;" allowtransparency="true"></iframe></div></li><li class="share-twitter"><div class="twitter_button"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="./Variety_BIT_files/saved_resource.html" style="width: 101px; height: 20px; display: none !important;"></iframe></div></li><li class="share-google-plus-1"><div class="googleplus1_button"><div id="___plus_0" style="position: absolute; width: 450px; left: -10000px;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: absolute; top: -10000px; width: 450px; margin: 0px; border-style: none; display: none !important;" tabindex="0" vspace="0" width="100%" id="I0_1405622849142" name="I0_1405622849142" src="./Variety_BIT_files/saved_resource.html" data-gapiattached="true"></iframe></div><div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/" data-gapiscan="true" data-onload="true" data-gapistub="true"></div></div></li><li class="share-linkedin"><div class="linkedin_button"><script type="in/share" data-url="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/" data-counter="right"></script></div></li><li><a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#" class="sharing-anchor sd-button share-more"><span>More</span></a></li><li class="share-end"></li></ul><div class="sharing-hidden"><div class="inner" style="display: none;"><ul><li class="share-print"><a rel="nofollow" class="share-print sd-button" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-email share-service-visible"><a rel="nofollow" class="share-email sd-button" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?share=email&nb=1" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-end"></li><li class="share-tumblr"><a target="_blank" href="http://www.tumblr.com/share/link/?url=http%3A%2F%2Fkartikkukreja.wordpress.com%2F2013%2F12%2F02%2Frange-updates-with-bit-fenwick-tree%2F&name=Range%20updates%20with%20BIT%20%2F%20Fenwick%20Tree" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:62px; height:20px; background:url(&#39;//platform.tumblr.com/v1/share_2.png&#39;) top left no-repeat transparent;">Share on Tumblr</a></li><li class="share-pinterest"><div class="pinterest_button"><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fkartikkukreja.wordpress.com%2F2013%2F12%2F02%2Frange-updates-with-bit-fenwick-tree%2F&description=Range%20updates%20with%20BIT%20%2F%20Fenwick%20Tree" data-pin-do="buttonBookmark"><img src="http://assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" style="display: none !important;"></a></div></li><li class="share-end"></li><li class="share-stumbleupon"><div class="stumbleupon_button"><iframe src="./Variety_BIT_files/saved_resource.html" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 74px; height: 18px; display: none !important;" allowtransparency="true"></iframe></div></li><li class="share-pocket"><div class="pocket_button"><a href="https://getpocket.com/save" class="pocket-btn" data-lang="en" data-save-url="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/" data-pocket-count="horizontal">Pocket</a></div></li><li class="share-end"></li><li class="share-reddit"><div class="reddit_button"><iframe src="./Variety_BIT_files/saved_resource.html" height="22" width="120" scrolling="no" frameborder="0" style="display: none !important;"></iframe></div></li><li class="share-end"></li></ul></div></div></div></div></div><div class="sharedaddy sd-block sd-social sd-gplus"><h3 class="sd-title">Google+</h3><div class="sd-content"><a href="https://plus.google.com/104022914902346204287"><img src="./Variety_BIT_files/photo.jpg" alt="Kartik kukreja" width="20" height="20" align="absmiddle"> </a><a rel="author" href="https://plus.google.com/104022914902346204287" class="gplus-profile">Kartik kukreja</a><span class="g-follow-wrapper"><div id="___follow_0" style="position: absolute; width: 450px; left: -10000px;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: absolute; top: -10000px; width: 450px; margin: 0px; border-style: none; display: none !important;" tabindex="0" vspace="0" width="100%" id="I1_1405622849150" name="I1_1405622849150" src="./Variety_BIT_files/saved_resource.html" data-gapiattached="true"></iframe></div><span class="g-follow" data-href="https://plus.google.com/104022914902346204287" data-rel="author" data-height="15" data-gapiscan="true" data-onload="true" data-gapistub="true"></span></span></div></div><div class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" id="like-post-wrapper-47004858-420-53c81a3bbd0ec" data-src="//widgets.wp.com/likes/#blog_id=47004858&amp;post_id=420&amp;origin=kartikkukreja.wordpress.com&amp;obj_id=47004858-420-53c81a3bbd0ec" data-name="like-post-frame-47004858-420-53c81a3bbd0ec"><h3 class="sd-title">Like this:</h3><div class="likes-widget-placeholder post-likes-widget-placeholder" style="height: 55px; display: none;"><span class="button"><span>Like</span></span> <span class="loading">Loading...</span></div><iframe class="post-likes-widget jetpack-likes-widget" name="like-post-frame-47004858-420-53c81a3bbd0ec" height="55px" width="100%" frameborder="0" src="./Variety_BIT_files/saved_resource(7).html"></iframe><span class="sd-text-color"></span><a class="sd-link-color"></a></div>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal"><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="125" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://kartikkukreja.wordpress.com/2013/05/11/bit-fenwick-tree-data-structure-c-implementation/" title="BIT / Fenwick Tree data structure C++ implementation
+
+A BIT (Binary Indexed Tree) or Fenwick Tree is a data structure&amp;nbsp;providing efficient methods for calculation and manipulation of the&amp;nbsp;prefix sums&amp;nbsp;of a table of values. It supports the following operations&amp;hellip;" rel="nofollow" data-origin="420" data-position="0">BIT / Fenwick Tree data structure C++ implementation</a></span><span class="jp-relatedposts-post-context">In "Data Structures"</span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="146" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://kartikkukreja.wordpress.com/2013/05/28/indexed-min-priority-queue-c-implementation/" title="Indexed Min-Priority Queue C++ implementation
+
+A min-priority queue is an abstract data structure that supports efficient query of the minimum element in a list of elements, insertion of elements and deletion of the minimum element.&amp;hellip;" rel="nofollow" data-origin="420" data-position="1">Indexed Min-Priority Queue C++ implementation</a></span><span class="jp-relatedposts-post-context">In "Data Structures"</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="122" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://kartikkukreja.wordpress.com/2013/05/07/union-find-disjoint-set-data-structure-c-implementation/" title="Union Find / Disjoint Set data structure C++ implementation
+
+A disjoint-set data structure is a data structure that keeps track of a set of elements partitioned into a number of disjoint (non-overlapping) subsets. It supports two operations : Find:&amp;hellip;" rel="nofollow" data-origin="420" data-position="2">Union Find / Disjoint Set data structure C++ implementation</a></span><span class="jp-relatedposts-post-context">In "Data Structures"</span></p></div></div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		This entry was posted in <a href="http://kartikkukreja.wordpress.com/category/data-structures/" rel="category tag">Data Structures</a> and tagged <a href="http://kartikkukreja.wordpress.com/tag/binary-indexed-tree/" rel="tag">binary indexed tree</a>, <a href="http://kartikkukreja.wordpress.com/tag/bit/" rel="tag">BIT</a>, <a href="http://kartikkukreja.wordpress.com/tag/c-implementation/" rel="tag">C++ implementation</a>, <a href="http://kartikkukreja.wordpress.com/tag/explanation/" rel="tag">explanation</a>, <a href="http://kartikkukreja.wordpress.com/tag/fenwick-tree/" rel="tag">fenwick tree</a>, <a href="http://kartikkukreja.wordpress.com/tag/horrible-spoj/" rel="tag">HORRIBLE Spoj</a>, <a href="http://kartikkukreja.wordpress.com/tag/point-updatesrange-queries/" rel="tag">point updates/range queries</a>, <a href="http://kartikkukreja.wordpress.com/tag/range-updatespoint-queries/" rel="tag">range updates/point queries</a>, <a href="http://kartikkukreja.wordpress.com/tag/range-updatesrange-queries/" rel="tag">range updates/range queries</a>, <a href="http://kartikkukreja.wordpress.com/tag/updateit-spoj/" rel="tag">UPDATEIT Spoj</a>. Bookmark the <a href="./Variety_BIT_files/Variety_BIT.html" title="Permalink to Range updates with BIT / Fenwick Tree" rel="bookmark">permalink</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-420 -->
+					<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="http://kartikkukreja.wordpress.com/2013/11/24/scheduling-to-minimize-lateness/" rel="prev"><span class="meta-nav">←</span> Scheduling to minimize&nbsp;lateness</a></div>		<div class="nav-next"><a href="http://kartikkukreja.wordpress.com/2013/12/22/divisibility-rules/" rel="next">Divisibility rules <span class="meta-nav">→</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+					<div id="comments" class="comments-area">
+	
+	
+			<h2 class="comments-title">
+			15 thoughts on “<span>Range updates with BIT / Fenwick&nbsp;Tree</span>”		</h2>
+
+		
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-1876">
+		<article id="comment-1876" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/f213da74e62d0938ac523b57fec23451" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-f213da74e62d0938ac523b57fec23451-0">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-1876"><time pubdate="" datetime="2013-12-17T21:51:11+00:00">
+					December 17, 2013 at 9:51 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p><a href="http://arxiv.org/abs/1311.6093" rel="nofollow">http://arxiv.org/abs/1311.6093</a></p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=1876#respond" onclick="return addComment.moveForm(&quot;comment-1876&quot;, &quot;1876&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-1891">
+		<article id="comment-1891" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/saved_resource(3)" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-false-0">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-1891"><time pubdate="" datetime="2013-12-21T16:54:16+00:00">
+					December 21, 2013 at 4:54 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Very nice tutorial <span class="wp-smiley emoji emoji-smile" title=":)">:)</span><br>
+I have a doubt in the update(a,b,v) which adds v to all elements from index a to index b.Suppose N=8 i.e there are total 8 elements. Now update(3,6,10) will update(add 10 to) elements from index 3 to index 6. update(3,6,10) can be performed as update(3,10) and update(7,-10). update(3,10) adds 10 to indexes 3,4 and 8. Similarly update(7,-10) adds -10 to indexes 7 and 8.Now to find sum(6) which is the sum of all elements from index 1 to 6 , will be sum(5…6)+sum(1…..4) but index 5 and 6 were not updated. So I want to ask how is it giving the correct result?</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=1891#respond" onclick="return addComment.moveForm(&quot;comment-1891&quot;, &quot;1891&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-kartikkukreja bypostauthor even depth-2 highlander-comment" id="li-comment-1892">
+		<article id="comment-1892" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-1">					<a href="http://kartikkukreja.wordpress.com/" rel="external nofollow" class="url">kartik kukreja</a> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-1892"><time pubdate="" datetime="2013-12-21T19:29:23+00:00">
+					December 21, 2013 at 7:29 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>I think you are talking about the case of range updates and point queries. Note that the BIT is not actually storing cumulative sum of true values of elements, only the updates that have been applied to them so update(3,6,10) would not cause 10 to be added cumulatively for each element in 3…6, just once. While querying for any element in 3..6, we should see the update only once, which we do for element 6 in element 4.</p>
+<p>In this case, query(6), query(5) and query(4) would use update at ft[4], query(3) would use update at ft[3], queries to elements &gt; 6 would see 2 updates 10 and -10.</p>
+<p>I hope that clears the doubt. Typically a BIT is used to store the cumulative sum of elements but we have changed its semantics here. The key idea is that if we update an element p, then every element &gt;= p would see that update.</p>
+<p>Let me know if you need more help.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=1892#respond" onclick="return addComment.moveForm(&quot;comment-1892&quot;, &quot;1892&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-kartikkukreja bypostauthor odd alt depth-2 highlander-comment" id="li-comment-1893">
+		<article id="comment-1893" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-2">					<a href="http://kartikkukreja.wordpress.com/" rel="external nofollow" class="url">kartik kukreja</a> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-1893"><time pubdate="" datetime="2013-12-21T19:36:51+00:00">
+					December 21, 2013 at 7:36 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>You might already know this but just in case, update(a,b,v) does not literally add v to each ft[a]..ft[b]. The semantics of update and query functions are such that an update(a,v) is seen by query(a’) for each a’ &gt;= a.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=1893#respond" onclick="return addComment.moveForm(&quot;comment-1893&quot;, &quot;1893&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2055">
+		<article id="comment-2055" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/4ceea775daeb13e89e74e4d01b515f2f" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-4ceea775daeb13e89e74e4d01b515f2f-0">					abhilash rudra <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2055"><time pubdate="" datetime="2014-01-21T17:48:38+00:00">
+					January 21, 2014 at 5:48 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>awesome tutorial… (y)</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2055#respond" onclick="return addComment.moveForm(&quot;comment-2055&quot;, &quot;2055&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2172">
+		<article id="comment-2172" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/5b20af483ca6490390a1cc2197fdb994" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-5b20af483ca6490390a1cc2197fdb994-0">					Ishant Sharma <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2172"><time pubdate="" datetime="2014-02-13T01:47:54+00:00">
+					February 13, 2014 at 1:47 am					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Nice tutorial (y)</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2172#respond" onclick="return addComment.moveForm(&quot;comment-2172&quot;, &quot;2172&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2429">
+		<article id="comment-2429" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/903bb8ab831fb2299fc57d9a14ca184f" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-903bb8ab831fb2299fc57d9a14ca184f-0">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2429"><time pubdate="" datetime="2014-04-04T11:15:49+00:00">
+					April 4, 2014 at 11:15 am					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>VEry nice tutorial .But  for range qury and range update “Why we are not doing :- update(a,v) update(b+1,-v) for the update part and query(b)-query(a-1) for the sum part ..whats wrong in that part???”</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2429#respond" onclick="return addComment.moveForm(&quot;comment-2429&quot;, &quot;2429&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-kartikkukreja bypostauthor odd alt depth-2 highlander-comment" id="li-comment-2432">
+		<article id="comment-2432" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-3">					<a href="http://kartikkukreja.wordpress.com/" rel="external nofollow" class="url">kartik kukreja</a> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2432"><time pubdate="" datetime="2014-04-04T16:54:25+00:00">
+					April 4, 2014 at 4:54 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Please read the explanation. In short, a BIT is a cumulative frequency table. update(a,v) doesn’t literally add v to every bit[i], a&lt;=i&lt;=N, it just has the effect of doing so. To handle range updates and range queries, we must use two BITs.</p>
+<p>If we used a single BIT and performed range update: update(a,b,v) as update(a,v) and update(b+1,-v), the update v would be visible only once in the range [a,b], it won't be a range update (it won't have the effect of adding v cumulatively to each [a,b]). Similarly, query(b)-query(a-1) would only be v, not v*(b-a+1).</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2432#respond" onclick="return addComment.moveForm(&quot;comment-2432&quot;, &quot;2432&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2434">
+		<article id="comment-2434" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/903bb8ab831fb2299fc57d9a14ca184f" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-903bb8ab831fb2299fc57d9a14ca184f-1">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2434"><time pubdate="" datetime="2014-04-04T21:27:12+00:00">
+					April 4, 2014 at 9:27 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>So it does depend on the question that whether we have to use SINGLE or DOUBLE depends on whether it is Point update range query,range update point query or range update range query..??</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2434#respond" onclick="return addComment.moveForm(&quot;comment-2434&quot;, &quot;2434&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-kartikkukreja bypostauthor odd alt depth-2 highlander-comment" id="li-comment-2435">
+		<article id="comment-2435" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-4">					<a href="http://kartikkukreja.wordpress.com/" rel="external nofollow" class="url">kartik kukreja</a> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2435"><time pubdate="" datetime="2014-04-04T22:29:09+00:00">
+					April 4, 2014 at 10:29 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Yes. Point Update Range Query and Range Update Point Query cases can be handled with a single BIT but Range Update Range Query requires two BITs.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2435#respond" onclick="return addComment.moveForm(&quot;comment-2435&quot;, &quot;2435&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2437">
+		<article id="comment-2437" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/saved_resource(3)" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-false-1">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2437"><time pubdate="" datetime="2014-04-05T16:00:22+00:00">
+					April 5, 2014 at 4:00 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Thanks for putting this up.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2437#respond" onclick="return addComment.moveForm(&quot;comment-2437&quot;, &quot;2437&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2499">
+		<article id="comment-2499" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/saved_resource(3)" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-false-2">					Anonymous <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2499"><time pubdate="" datetime="2014-04-21T18:33:48+00:00">
+					April 21, 2014 at 6:33 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Why does in range update and point query , query(x) returns only the values at that position only??<br>
+What is the reason??</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2499#respond" onclick="return addComment.moveForm(&quot;comment-2499&quot;, &quot;2499&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-kartikkukreja bypostauthor even depth-2 highlander-comment" id="li-comment-2502">
+		<article id="comment-2502" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/014239b8d3fd3f33503d0b5766b5d58b" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-014239b8d3fd3f33503d0b5766b5d58b-5">					<a href="http://kartikkukreja.wordpress.com/" rel="external nofollow" class="url">kartik kukreja</a> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2502"><time pubdate="" datetime="2014-04-21T21:55:03+00:00">
+					April 21, 2014 at 9:55 pm					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>The question as I understand is this: why the same query(x) function calculates sum(A[1..x]) for point-update-range-query while it calculates A[x] for range-update-point-query?</p>
+<p>update(x,v) and query(x) functions are common to both the cases so they must have the same behavior too. update(x,v) adds v to some elements ft[i] (i≥x) such that when you call query(i) (i≥x), you will see this update v exactly once and thus count it exactly once. query(x) adds some elements ft[i] (i≤x) such that each update to any element i≤x is seen exactly once.</p>
+<p>For the point-update-range-query case, all update(x,v) are visible to x’≥x so when you call query(c), you effectively add all the updates applied to all elements 1≤i≤c which is nothing but the sum of A[1..c].</p>
+<p>However, in the case of range-update-point-query, updates can be cancelled off. updates(a,b,v) is only visible exactly once inside the range a..b (effected by adding -v to ft[i] for i&gt;b). Now, when you call query(c), it still sums the frequencies from 1 to c but their meaning is now different. If it sees an update v during summing frequencies, it is because that index lied in the range of some range update a..b applied some time before. Since the value is seen only once, it is as if v is added to only that index. This explains why query(c) now calculates A[c]. It is still calculating sum of frequencies but they have a different meaning now.</p>
+<p>I hope this makes sense to you. Thanks for showing interest.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2502#respond" onclick="return addComment.moveForm(&quot;comment-2502&quot;, &quot;2502&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-2680">
+		<article id="comment-2680" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/912f8ac7e87dc26dae676615e940337a" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-912f8ac7e87dc26dae676615e940337a-0">					Ashish Tilokani <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2680"><time pubdate="" datetime="2014-05-22T01:23:10+00:00">
+					May 22, 2014 at 1:23 am					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>I am not getting the correct answer if I take in p &amp; q and pass p+1 &amp; q+1 to the 2 functions in main to make it 1 based index. Why is it so?</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2680#respond" onclick="return addComment.moveForm(&quot;comment-2680&quot;, &quot;2680&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment even depth-2 highlander-comment" id="li-comment-2681">
+		<article id="comment-2681" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt="" src="./Variety_BIT_files/912f8ac7e87dc26dae676615e940337a" class="avatar avatar-45 grav-hashed grav-hijack" height="45" width="45" id="grav-912f8ac7e87dc26dae676615e940337a-1">					Ashish Tilokani <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/comment-page-1/#comment-2681"><time pubdate="" datetime="2014-05-22T01:47:45+00:00">
+					May 22, 2014 at 1:47 am					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>solved … just realizes that they are already 1- based indexed</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/?replytocom=2681#respond" onclick="return addComment.moveForm(&quot;comment-2681&quot;, &quot;2681&quot;, &quot;respond&quot;, &quot;420&quot;)">Reply</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+
+		
+	
+	
+									<div id="respond" class="comment-respond js">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://kartikkukreja.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										
+
+
+												<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="103567033b"><input type="hidden" name="_wp_http_referer" value="/2013/12/02/range-updates-with-bit-fenwick-tree/">
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; -webkit-transition: none; transition: none; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: 22px; width: 629.4375px;" class="autosizejs "></textarea><textarea id="comment" name="comment" title="Enter your comment here..." placeholder="Enter your comment here..." style="height: 42px; overflow: hidden; word-wrap: break-word; resize: horizontal;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="./Variety_BIT_files/saved_resource(8).html" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./Variety_BIT_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name</label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value=""></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Variety_BIT_files/wplogo.png" alt="WordPress.com Logo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Variety_BIT_files/ad516503a11cd5ca435acc9bb6523536" alt="Twitter picture" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Variety_BIT_files/ad516503a11cd5ca435acc9bb6523536" alt="Facebook photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Variety_BIT_files/ad516503a11cd5ca435acc9bb6523536" alt="Google+ photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+	
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of follow-up comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog" style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+												<p class="form-submit" style="display: none;">
+							<input name="submit" type="submit" id="comment-submit" value="Post Comment">
+							<input type="hidden" name="comment_post_ID" value="420" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1e59393d63"></p>
+<input type="hidden" name="genseq" value="1405622843">
+<p style="display: none;"></p>					<input type="hidden" id="ak_js" name="ak_js" value="1405622849009"></form>
+							</div><!-- #respond -->
+			<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+			
+			</div><!-- #content -->
+		</div><!-- #primary .site-content -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+			
+							<div class="syndicate">
+					<ul>
+													<li><a class="rss-link" href="http://kartikkukreja.wordpress.com/feed/" title="RSS"><span>RSS Feed</span></a></li>
+						
+													<li><a class="twitter-link" href="https://twitter.com/kartikkukreja92" title="Twitter"><span>Twitter</span></a></li>
+						
+													<li><a class="facebook-link" href="https://www.facebook.com/kartikkukreja92" title="Facebook"><span>Facebook</span></a></li>
+						
+													<li><a class="google-link" href="https://plus.google.com/104022914902346204287/about" title="Google+"><span>Google Plus</span></a></li>
+						
+						
+					</ul>
+				</div><!-- .syndicate -->
+			
+			
+				<aside id="search-2" class="widget widget_search"><h1 class="widget-title">Looking for something?</h1>	<form method="get" id="searchform" action="http://kartikkukreja.wordpress.com/" role="search">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Search …">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search">
+	</form></aside><aside id="blog_subscription-2" class="widget widget_blog_subscription">				<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="subscribe-blog">
+											<p>Join 1,127 other followers</p>
+						<p><input type="text" name="email" style="width: 95%; padding: 1px 2px" placeholder="Enter your email address" value="" id="subscribe-field"></p>
+					
+					<p>
+						<input type="hidden" name="action" value="subscribe">
+						<input type="hidden" name="blog_id" value="47004858">
+						<input type="hidden" name="source" value="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/">
+						<input type="hidden" name="sub-type" value="widget">
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-2">
+						<input type="hidden" id="_wpnonce" name="_wpnonce" value="e7e98d499d">						<input type="submit" value="Follow via email">
+					</p>
+				</form>
+			
+</aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Recent Posts</h1>		<ul>
+					<li>
+				<a href="http://kartikkukreja.wordpress.com/2014/06/29/alphabetasearch/">Alpha Beta Search</a>
+						</li>
+					<li>
+				<a href="http://kartikkukreja.wordpress.com/2014/03/17/heuristicevaluation-function-for-nine-mens-morris/">Heuristic/Evaluation Function for Nine Men’s&nbsp;Morris</a>
+						</li>
+					<li>
+				<a href="http://kartikkukreja.wordpress.com/2013/12/28/a-star-search/">A* search algorithm</a>
+						</li>
+					<li>
+				<a href="http://kartikkukreja.wordpress.com/2013/12/22/divisibility-rules/">Divisibility rules</a>
+						</li>
+					<li>
+				<a href="./Variety_BIT_files/Variety_BIT.html">Range updates with BIT / Fenwick&nbsp;Tree</a>
+						</li>
+				</ul>
+		</aside><aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<ul>
+	<li><a href="http://kartikkukreja.wordpress.com/2014/06/">June 2014</a>&nbsp;(1)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2014/03/">March 2014</a>&nbsp;(1)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/12/">December 2013</a>&nbsp;(3)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/11/">November 2013</a>&nbsp;(2)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/10/">October 2013</a>&nbsp;(4)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/09/">September 2013</a>&nbsp;(2)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/08/">August 2013</a>&nbsp;(4)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/07/">July 2013</a>&nbsp;(2)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/06/">June 2013</a>&nbsp;(9)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/05/">May 2013</a>&nbsp;(11)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/04/">April 2013</a>&nbsp;(9)</li>
+	<li><a href="http://kartikkukreja.wordpress.com/2013/03/">March 2013</a>&nbsp;(5)</li>
+		</ul>
+</aside><aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Categories</h1>		<ul>
+	<li class="cat-item cat-item-3378"><a href="http://kartikkukreja.wordpress.com/category/algorithms/">Algorithms</a> (34)
+</li>
+	<li class="cat-item cat-item-12374"><a href="http://kartikkukreja.wordpress.com/category/artificial-intelligence/">Artificial Intelligence</a> (6)
+</li>
+	<li class="cat-item cat-item-76917337"><a href="http://kartikkukreja.wordpress.com/category/coursera/">Coursera</a> (9)
+</li>
+	<li class="cat-item cat-item-37687"><a href="http://kartikkukreja.wordpress.com/category/data-structures/">Data Structures</a> (4)
+</li>
+	<li class="cat-item cat-item-98821774"><a href="http://kartikkukreja.wordpress.com/category/hackerrank/">Hackerrank</a> (6)
+</li>
+	<li class="cat-item cat-item-9489678"><a href="http://kartikkukreja.wordpress.com/category/mooc/">MOOC</a> (9)
+</li>
+	<li class="cat-item cat-item-1"><a href="http://kartikkukreja.wordpress.com/category/uncategorized/">Uncategorized</a> (4)
+</li>
+		</ul>
+</aside><aside id="blog-stats-2" class="widget widget_blog-stats"><h1 class="widget-title">Blog Stats</h1>		<ul>
+			<li>55,312 pageviews</li>
+		</ul>
+		</aside>
+					</div><!-- #secondary .widget-area -->
+	</div><!-- #main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="http://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com</a>.
+			<span class="sep"> | </span>
+			<a href="http://theme.wordpress.com/themes/sundance/" title="Learn more about this theme">The Sundance Theme</a>.		</div><!-- .site-info -->
+	</footer><!-- .site-footer .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<script type="text/javascript" src="./Variety_BIT_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Variety_BIT_files/wpgroho.js"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-014239b8d3fd3f33503d0b5766b5d58b">
+	</div>
+	<div class="grofile-hash-map-f213da74e62d0938ac523b57fec23451">
+	</div>
+	<div class="grofile-hash-map-d41d8cd98f00b204e9800998ecf8427e">
+	</div>
+	<div class="grofile-hash-map-014239b8d3fd3f33503d0b5766b5d58b">
+	</div>
+	<div class="grofile-hash-map-4ceea775daeb13e89e74e4d01b515f2f">
+	</div>
+	<div class="grofile-hash-map-5b20af483ca6490390a1cc2197fdb994">
+	</div>
+	<div class="grofile-hash-map-903bb8ab831fb2299fc57d9a14ca184f">
+	</div>
+	<div class="grofile-hash-map-912f8ac7e87dc26dae676615e940337a">
+	</div>
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"http:\/\/kartikkukreja.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/kartikkukreja.wordpress.com\/wp-login.php?action=logout&_wpnonce=debd17fcee","homeURL":"http:\/\/kartikkukreja.wordpress.com\/","postID":"420","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"0"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Variety_BIT_files/saved_resource(4)"></script>
+
+	<div id="bit" class="loggedout-follow-normal" style="bottom: -30px;">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow “Everything Under The Sun”</label></h3>
+
+			<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+						<p class="bit-follow-count">Join 1,127 other followers</p>
+			<p><input type="email" name="email" value="Enter your email address" onfocus="this.value=(this.value==&quot;Enter your email address&quot;) ? &quot;&quot; : this.value;" onblur="this.value=(this.value==&quot;&quot;) ? &quot;Enter email address&quot; : this.value;" id="loggedout-follow-field"></p>
+
+			<input type="hidden" name="action" value="subscribe">
+			<input type="hidden" name="blog_id" value="47004858">
+			<input type="hidden" name="source" value="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/">
+			<input type="hidden" name="sub-type" value="loggedout-follow">
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="e7e98d499d"><input type="hidden" name="_wp_http_referer" value="/2013/12/02/range-updates-with-bit-fenwick-tree/">
+			<p id="bsub-subscribe-button"><input type="submit" value="Sign me up"></p>
+			</form>
+					<div id="bsub-credit"><a href="http://wordpress.com/signup/?ref=lof">Powered by WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+
+	<script type="text/javascript">
+		WPCOM_sharing_counts = {"http:\/\/kartikkukreja.wordpress.com\/2013\/12\/02\/range-updates-with-bit-fenwick-tree\/":420}	</script>
+		<script type="text/javascript">
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+					<script type="text/javascript">
+			  (function() {
+			    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			    po.src = 'https://apis.google.com/js/plusone.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			  })();
+			</script>
+			<script type="text/javascript">
+			jQuery( document ).ready( function() {
+			    jQuery.getScript( '//platform.linkedin.com/in.js?async=true', function success() {
+			        IN.init();
+			    });
+			});
+			jQuery( document.body ).on( 'post-load', function() {
+				if ( typeof IN != 'undefined' )
+					IN.parse();
+			});
+			</script>	<div id="sharing_email" style="display: none;">
+		<form action="./Variety_BIT_files/Variety_BIT.html" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="">
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="">
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="">
+
+			
+			<div class="recaptcha" id="sharing_recaptcha"></div><input type="hidden" name="recaptcha_public_key" id="recaptcha_public_key" value="6LcYW8MSAAAAADBAuEH9yaPcF7lWh11Iq62ZKtoo">
+			<img style="float: right; display: none" class="loading" src="./Variety_BIT_files/loading.gif" alt="loading" width="16" height="16">
+			<input type="submit" value="Send Email" class="sharing_send">
+			<a href="http://kartikkukreja.wordpress.com/2013/12/02/range-updates-with-bit-fenwick-tree/#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>					<script type="text/javascript">
+				// Pinterest shared resources
+				var s = document.createElement("script");
+				s.type = "text/javascript";
+				s.async = true;
+				s.src = window.location.protocol + "//assets.pinterest.com/js/pinit.js";
+				var x = document.getElementsByTagName("script")[0];
+				x.parentNode.insertBefore(s, x);
+				// if 'Pin it' button has 'counts' make container wider
+				jQuery(window).load( function(){ jQuery( 'li.share-pinterest a span:visible' ).closest( '.share-pinterest' ).width( '80px' ); } );
+			</script>
+				<script>
+		// Don't use Pocket's default JS as it we need to force init new Pocket share buttons loaded via JS.
+		function jetpack_sharing_pocket_init() {
+			jQuery.getScript( 'https://widgets.getpocket.com/v1/j/btn.js?v=1' );
+		}
+		jQuery( document ).on( 'ready', jetpack_sharing_pocket_init );
+		jQuery( document.body ).on( 'post-load', jetpack_sharing_pocket_init );
+		</script>
+				<iframe src="./Variety_BIT_files/master.html" scrolling="no" id="likes-master" name="likes-master" style="display:none;"></iframe>
+		<div id="likes-other-gravatars"><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+		<script type="text/javascript">
+		//<![CDATA[
+			var jetpackLikesWidgetQueue = [];
+			var jetpackLikesWidgetBatch = [];
+			var jetpackLikesMasterReady = false;
+
+			function JetpackLikespostMessage( message, target ) {
+				if ( "string" === typeof message ){
+					try{
+						message = JSON.parse( message );
+					}
+					catch(e) {
+						return;
+					}
+				}
+
+				pm( {
+					target: target,
+					type: 'likesMessage',
+					data: message,
+					origin: '*'
+				} );
+			}
+
+			function JetpackLikesBatchHandler() {
+				var requests = [];
+				jQuery( 'div.jetpack-likes-widget-unloaded' ).each( function( i ) {
+					if ( jetpackLikesWidgetBatch.indexOf( this.id ) > -1 )
+						return;
+					jetpackLikesWidgetBatch.push( this.id );
+					var regex = /like-(post|comment)-wrapper-(\d+)-(\d+)-(\w+)/;
+					var match = regex.exec( this.id );
+					if ( ! match || match.length != 5 )
+						return;
+
+					var info = {
+						blog_id: match[2],
+						width:   this.width
+					};
+
+					if ( 'post' == match[1] ) {
+						info.post_id = match[3];
+					} else if ( 'comment' == match[1] ) {
+						info.comment_id = match[3];
+					}
+
+					info.obj_id = match[4];
+
+					requests.push( info );
+				});
+
+				if ( requests.length > 0 ) {
+					JetpackLikespostMessage( { event: 'initialBatch', requests: requests }, window.frames['likes-master'] );
+				}
+			}
+
+			function JetpackLikesMessageListener( event ) {
+				if ( "undefined" == typeof event.event )
+					return;
+
+				if ( 'masterReady' == event.event ) {
+					jQuery( document ).ready( function() {
+						jetpackLikesMasterReady = true;
+
+						var stylesData = {
+								event: 'injectStyles'
+						};
+
+						if ( jQuery( 'iframe.admin-bar-likes-widget' ).length > 0 ) {
+							JetpackLikespostMessage( { event: 'adminBarEnabled' }, window.frames[ 'likes-master' ] );
+
+							stylesData.adminBarStyles = {
+								background: jQuery( '#wpadminbar .quicklinks li#wp-admin-bar-wpl-like > a' ).css( 'background' ),
+								isRtl: ( 'rtl' == jQuery( '#wpadminbar' ).css( 'direction' ) )
+							};
+						}
+
+						if ( !window.addEventListener )
+							jQuery( '#wp-admin-bar-admin-bar-likes-widget' ).hide();
+
+						stylesData.textStyles = {
+							color: jQuery( '.sd-text-color').css( 'color' ),
+							fontFamily: jQuery( '.sd-text-color' ).css( 'font-family' ),
+							fontSize: jQuery( '.sd-text-color' ).css( 'font-size' ),
+							direction: jQuery( '.sd-text-color' ).css( 'direction' ),
+							fontWeight: jQuery( '.sd-text-color' ).css( 'font-weight' ),
+							fontStyle: jQuery( '.sd-text-color' ).css( 'font-style' ),
+							textDecoration: jQuery( '.sd-text-color' ).css('text-decoration')
+						};
+
+						stylesData.linkStyles = {
+							color: jQuery( '.sd-link-color' ).css('color'),
+							fontFamily: jQuery( '.sd-link-color' ).css('font-family'),
+							fontSize: jQuery( '.sd-link-color' ).css('font-size'),
+							textDecoration: jQuery( '.sd-link-color' ).css('text-decoration'),
+							fontWeight: jQuery( '.sd-link-color' ).css( 'font-weight' ),
+							fontStyle: jQuery( '.sd-link-color' ).css( 'font-style' )
+						};
+
+						JetpackLikespostMessage( stylesData, window.frames[ 'likes-master' ] );
+
+						JetpackLikesBatchHandler();
+
+						jQuery( document ).on( 'inview', 'div.jetpack-likes-widget-unloaded', function() {
+							jetpackLikesWidgetQueue.push( this.id );
+						});
+					});
+				}
+
+				if ( 'showLikeWidget' == event.event ) {
+					jQuery( '#' + event.id + ' .post-likes-widget-placeholder'  ).fadeOut( 'fast', function() {
+						jQuery( '#' + event.id + ' .post-likes-widget' ).fadeIn( 'fast', function() {
+							JetpackLikespostMessage( { event: 'likeWidgetDisplayed', blog_id: event.blog_id, post_id: event.post_id, obj_id: event.obj_id }, window.frames['likes-master'] );
+						});
+					});
+				}
+
+				if ( 'clickReblogFlair' == event.event ) {
+					wpcom_reblog.toggle_reblog_box_flair( event.obj_id );
+				}
+
+				if ( 'showOtherGravatars' == event.event ) {
+					var $container = jQuery( '#likes-other-gravatars' );
+					var $list = $container.find( 'ul' );
+
+					$container.hide();
+					$list.html( '' );
+
+					$container.find( '.likes-text span' ).text( event.total );
+
+					jQuery.each( event.likers, function( i, liker ) {
+						$list.append( '<li class="' + liker.css_class + '"><a href="' + liker.profile_URL + '" class="wpl-liker" rel="nofollow" target="_parent"><img src="' + liker.avatar_URL + '" alt="' + liker.name + '" width="30" height="30" style="padding-right: 3px;" /></a></li>');
+					} );
+
+					var offset = jQuery( "[name='" + event.parent + "']" ).offset();
+
+					$container.css( 'left', offset.left + event.position.left - 10 + 'px' );
+					$container.css( 'top', offset.top + event.position.top - 33 + 'px' );
+
+					var rowLength = Math.floor( event.width / 37 );
+					var height = ( Math.ceil( event.likers.length / rowLength ) * 37 ) + 13;
+					if ( height > 204 ) {
+						height = 204;
+					}
+
+					$container.css( 'height', height + 'px' );
+					$container.css( 'width', rowLength * 37 - 7 + 'px' );
+
+					$list.css( 'width', rowLength * 37 + 'px' );
+
+					$container.fadeIn( 'slow' );
+
+					var scrollbarWidth = $list[0].offsetWidth - $list[0].clientWidth;
+					if ( scrollbarWidth > 0 ) {
+						$container.width( $container.width() + scrollbarWidth );
+						$list.width( $list.width() + scrollbarWidth );
+					}
+				}
+			}
+
+			pm.bind( 'likesMessage', function(e) { JetpackLikesMessageListener(e); } );
+
+			jQuery( document ).click( function( e ) {
+				var $container = jQuery( '#likes-other-gravatars' );
+
+				if ( $container.has( e.target ).length === 0 ) {
+					$container.fadeOut( 'slow' );
+				}
+			});
+
+			function JetpackLikesWidgetQueueHandler() {
+				var wrapperID;
+				if ( ! jetpackLikesMasterReady ) {
+					setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+					return;
+				}
+
+				if ( jetpackLikesWidgetQueue.length > 0 ) {
+					// We may have a widget that needs creating now
+					var found = false;
+					while( jetpackLikesWidgetQueue.length > 0 ) {
+						// Grab the first member of the queue that isn't already loading.
+						wrapperID = jetpackLikesWidgetQueue.splice( 0, 1 )[0];
+						if ( jQuery( '#' + wrapperID ).hasClass( 'jetpack-likes-widget-unloaded' ) ) {
+							found = true;
+							break;
+						}
+					}
+					if ( ! found ) {
+						setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+						return;
+					}
+				} else if ( jQuery( 'div.jetpack-likes-widget-unloaded' ).length > 0 ) {
+					// Grab any unloaded widgets for a batch request
+					JetpackLikesBatchHandler();
+
+					// Get the next unloaded widget
+					wrapperID = jQuery( 'div.jetpack-likes-widget-unloaded' ).first()[0].id;
+					if ( ! wrapperID ) {
+						// Everything is currently loaded
+						setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+						return;
+					}
+				}
+
+				if ( 'undefined' === typeof wrapperID ) {
+					setTimeout( JetpackLikesWidgetQueueHandler, 500 );
+					return;
+				}
+
+				var $wrapper = jQuery( '#' + wrapperID );
+				$wrapper.find( 'iframe' ).remove();
+
+				if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+					$wrapper.find( '.post-likes-widget-placeholder' ).after( "<iframe class='post-likes-widget jetpack-likes-widget' name='" + $wrapper.data( 'name' ) + "' height='22px' width='68px' frameBorder='0' scrolling='no' src='" + $wrapper.data( 'src' ) + "'></iframe>" );
+				} else {
+					$wrapper.find( '.post-likes-widget-placeholder' ).after( "<iframe class='post-likes-widget jetpack-likes-widget' name='" + $wrapper.data( 'name' ) + "' height='55px' width='100%' frameBorder='0' src='" + $wrapper.data( 'src' ) + "'></iframe>" );
+				}
+
+				$wrapper.removeClass( 'jetpack-likes-widget-unloaded' ).addClass( 'jetpack-likes-widget-loading' );
+
+				$wrapper.find( 'iframe' ).load( function( e ) {
+					var $iframe = jQuery( e.target );
+					$wrapper.removeClass( 'jetpack-likes-widget-loading' ).addClass( 'jetpack-likes-widget-loaded' );
+
+					JetpackLikespostMessage( { event: 'loadLikeWidget', name: $iframe.attr( 'name' ), width: $iframe.width() }, window.frames[ 'likes-master' ] );
+
+					if ( $wrapper.hasClass( 'slim-likes-widget' ) ) {
+						$wrapper.find( 'iframe' ).Jetpack( 'resizeable' );
+					}
+				});
+				setTimeout( JetpackLikesWidgetQueueHandler, 250 );
+			}
+			JetpackLikesWidgetQueueHandler();
+		//]]>
+		</script>
+<script type="text/javascript" src="./Variety_BIT_files/form.js"></script>
+<link rel="stylesheet" id="all-css-0" href="./Variety_BIT_files/style(1).css" type="text/css" media="all">
+<script type="text/javascript" src="./Variety_BIT_files/saved_resource(5)"></script>
+<script type="text/javascript" src="./Variety_BIT_files/plusone(1).js" gapi_processed="true"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var recaptcha_options = {"lang":"en"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Variety_BIT_files/sharing.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	var skimlinks_pub_id = "725X584219"
+	var skimlinks_sitename = "kartikkukreja.wordpress.com";
+	</script>
+	<script type="text/javascript" src="http://s.skimresources.com/js/725X1342.skimlinks.js"></script><script src="http://stats.wp.com/w.js?22" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'47004858','v':'wpcom','tz':'5','user_id':'0','post':'420','subd':'kartikkukreja'});
+ex_go({'crypt':'UE40eW5QN0p8M2Y/RE1lYixwbDJzR2UxfERBOWN1WEZPJjlNT1B8Sz9dMlkld0Q9WTZdOSt0cmp4Qk9OX2dZQ1tIV3RCbTg0N2NacUc5WlRBYW5hQV1UT21vSVgmZz9lbHx+a2UvWFsxemt6TGV0b1BbWjdGRGQ/c0s/UC8xeHhoSy00NGdxcW9hWFZbQWg5W2F0ZzN+dFc9SGEla0g9Y3gxNk5QdCtOcjVlVisuRVNRanIrVEhmL1NpQTZSJWdpejRFLHMuc2xHRnRKR0JJeCtvd3xGaU4uLlR0W1RILTZSRHl+OHhqcGNZY0ZBfE8tUjNaa2NoLmgxNi1jUk09VGlucnBpakdZRkdlXV83azh5UDdTaExYWVh+aXw5UjMyV0pLb3VXUXwmRUdEek8lW3Vjd3dWW3p2Y1FRKzIzPUpEaS1aLXRhbkVRQkRXY1RET0FXVkl8'});
+addLoadEvent(function(){linktracker_init('47004858',420);});
+	</script>
+<noscript>&lt;img src="http://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+
+<iframe name="oauth2relay843680352" id="oauth2relay843680352" src="./Variety_BIT_files/postmessageRelay.html" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><script src="./Variety_BIT_files/sf_main.jsp" id="v9parityID"></script><iframe src="./Variety_BIT_files/userData.html" style="position: absolute; top: -100px; left: -100px; z-index: -10; border: none; visibility: hidden; width: 1px; height: 1px;"></iframe><iframe src="./Variety_BIT_files/register_server_layer.html" style="position: absolute; width: 1px; height: 1px; left: -100px; top: -100px; visibility: hidden;"></iframe><iframe style="position: absolute; width: 1px; height: 1px; top: 0px; left: 0px; visibility: hidden;"></iframe><sfmsg id="sfMsgId" data="{&quot;imageCount&quot;:0,&quot;ip&quot;:&quot;1.1.1.1&quot;}"></sfmsg></body></html>

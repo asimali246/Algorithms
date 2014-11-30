@@ -1,0 +1,15 @@
+
+        fib[n]*(2*fib[n+1]-fib[n])=fib[2*n]
+        fib[n]*fib[n]+fib[n+1]*fib[n+1]=fib[2*n+1]
+        def f(n):
+        if n==0:
+            return (0,1)
+        if n%2==1:
+            a,b=f(n-1)
+            return (b%mod,(a+b)%mod)
+        else:
+            a,b=f(n/2)
+            return (a*(2*b-a)%mod, (a*a+b*b)%mod)
+        def fib(n):
+            a,b=f(n)
+            return a 

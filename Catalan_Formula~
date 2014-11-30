@@ -1,0 +1,6 @@
+The number of distinct binary trees with n vertices can be found with the Catalan formula, written
+using binomial coefficients notation n Ck above as: Cat(n) = ((2×n) Cn )/(n + 1); Cat(0) = 1.
+For example, there are ((2×3) C3 )/(3 + 1) = (6 C3 )/4 = 20/4 = 5 distinct binary trees with n = 3
+vertices.
+If we are asked to compute the values of Cat(n) for several n, it may be better to compute the
+values using bottom-up Dynamic Programming.
